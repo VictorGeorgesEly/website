@@ -1,0 +1,91 @@
+                     Compétences de l’équipe hébergement
+
+
+
+Cloud & Infrastructure
+
+   1.​ Kubernetes & Orchestration: gestion avancée des clusters, Helm, ArgoCD,
+       Harbor
+   2.​ Infrastructure as Code (IaC): Terraform, Ansible
+   3.​ Cloud hybride et multi-cloud: AWS, OVH, Scaleway
+   4.​ Serverless & Edge Computing: Lambda, Cloud Functions, Fastly CDN
+   5.​ Souveraineté numérique & cloud européen: OVH, Scaleway, OGO Security
+   6.​ Observabilité avancée: Prometheus, Grafana, Loki, ElasticSearch, Graylog
+   7.​ Optimisation des coûts Cloud: FinOps, gestion budgétaire du cloud
+
+
+Conteneurisation & Orchestration avancée
+
+   1.​ Docker & Conteneurs : Gestion avancée des workloads conteneurisés
+   2.​ Harbor : Registry privé pour la sécurisation et la gestion des images
+   3.​ Trafic réseau inter-conteneurs : Nginx, Traefik, HAProxy, Apache
+   4.​ Sécurité des conteneurs : Notary, Trivy, Falco, OPA
+
+
+Infrastructure Physique & Datacenters
+
+   1.​ Migration de datacenter & hébergement souverain : Accompagnement d’entreprises vers des
+       infrastructures en datacenter à Paris (Data4, Equinix)
+
+   2.​ Gestion des relations avec des resellers : Achat et intégration de matériel
+       optimisé selon les besoins clients
+
+   3.​ Installation et maintenance d’infrastructures physiques : Rack, câblage,
+       alimentation redondée, supervision
+
+   4.​ Cœur de réseau & équipements : Configuration et gestion avancée de
+       routeurs, switchs et firewalls (Fortigate, CISCO, OpenSense)
+
+   5.​ Hyperviseurs & virtualisation : VMWare, Proxmox, gestion de clusters haute
+       disponibilité
+   1.​ Zero Trust Security : architecture de sécurité moderne, segmentation réseau
+   2.​ Gestion des identités et accès (IAM) : Keycloak, RBAC, SSO
+   3.​ Sécurité des containers et du CI/CD : Trivy, Falco, OPA
+   4.​ Conformité RGPD et NIS2 : gestion des logs, audits, privacy by design,
+      salon cyber 2024
+   5.​ Protection contre les attaques DDoS & WAF avancé : OGO Security, AWS
+      Shield, ModSecurity, CloudFlare
+   6.​ Sécurité du Supply Chain Logiciel : attestation CI/CD
+   7.​ Sécurité mail & authentification avancée : DMARC, DKIM, SPF
+
+
+DevOps & Automatisation
+
+   1.​ GitOps & CI/CD avancé (GitLab CI, Jenkins, GitHub Action, ArgoCD, N8N)
+   2.​ Automatisation avec Python, Bash, Go (scripting avancé, WebHook, Terraform)
+   3.​ Self-healing   infrastructure    (auto-remédiation,      agent   IA    suivant     notre
+      monitoring à l’aide de nos pipelines N8N)
+   4.​ Gestion de logs et traçabilité avancée (Grafana Loki)
+   5.​ Optimisation   et    scaling    automatique    sur   Kubernetes       (KEDA,     Cluster
+      Autoscaler)
+
+
+Base de Données & Stockage
+
+   1.​ Gestion avancée de bases de données: PostgreSQL, MySQL, MariaDB, MongoDB,
+      Redis, SQLite
+   2.​ Stockage objet et distribué: Ceph, MinIO, S3-compatible
+   3.​ Optimisation   des    performances    DB:     caching,   sharding,      partitioning,
+      réplication master/slave ou master/master
+
+
+Networking & Edge Computing
+
+   1.​ Réseaux & connectivité avancée: OpenSense, VPN mesh, VLAN
+   2.​ Edge Computing & CDN: Cloudflare, Fastly
+   3.​ Mesh Networking & Service Mesh: Calico, Cilium
+
+
+Observabilité & Performance
+
+   1.​ Monitoring SRE avancé: SLI, SLO, SLAs, dashboards interactifs
+   2.​ Logging centralisé et scalable: Elastic Stack, Loki
+Nouvelles Tendances & Technologies en 2025
+
+   1.​ Confidential Computing: encryption in-use, enclaves sécurisées
+   2.​ Green   IT   &   Infrastructure   durable:   optimisation   énergétique,   cloud
+      écoresponsable
+   3.​ AI Ops & automatisation basée sur l’IA: agent IA pour gestion de pannes
+   4.​ Supercomputing & HPC dans le cloud: GPUs, TPU, compute distribué, cluster
+      pour modèles LLM
+
