@@ -1,4 +1,5 @@
 import type {PersonalInfo, Experience, Project, Skill, ContactInfo, Highlight} from "@/types/portfolio";
+import profileImg from "@/assets/514436947_18507088105051258_9132883700750569726_n.jpg";
 
 // Informations personnelles
 export const personalInfo: PersonalInfo = {
@@ -6,7 +7,7 @@ export const personalInfo: PersonalInfo = {
   title: "DevOps Engineer & Fullstack Developer",
   description: "Passionné par l'automatisation, l'infrastructure as code et le développement d'applications scalables. J'optimise les processus CI/CD et crée des solutions robustes.",
   backgroundImage: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-  profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+  profileImage: profileImg
 };
 
 // Informations de contact
