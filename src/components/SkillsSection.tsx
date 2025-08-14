@@ -27,7 +27,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, className 
         <div className="flex flex-wrap justify-center gap-6 max-w-full mx-auto">
           {skills.map((skillCategory, index) => (
             <motion.div
-              key={`skill-category-${index}`}
+              key={`skill-category-${skillCategory.category}`}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -38,34 +38,80 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, className 
                 {skillCategory.category}
               </h3>
 
-              <div className="space-y-3">
-                {skillCategory.items.map((skill: string, skillIndex: number) => (
-                  <motion.div
-                    key={`skill-${skillCategory.category}-${skillIndex}`}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: (index * 0.1) + (skillIndex * 0.05) }}
-                    viewport={{ once: true }}
-                    className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <span className="font-medium text-gray-700">{skill}</span>
-                    <div className="flex space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={`skill-dot-${skillCategory.category}-${skillIndex}-${i}`}
-                          initial={{ scale: 0 }}
-                          whileInView={{ scale: 1 }}
-                          transition={{ delay: (index * 0.1) + (skillIndex * 0.05) + (i * 0.02) }}
-                          viewport={{ once: true }}
-                          className={`w-2 h-2 rounded-full ${
-                            i < 4 ? 'bg-blue-500' : 'bg-gray-300'
-                          }`}
-                        />
-                      ))}
+              {/* Sous-catégories si présentes */}
+              {skillCategory.subcategories && skillCategory.subcategories.length > 0 ? (
+                <div className="space-y-6">
+                  {skillCategory.subcategories.map((sub, subIndex) => (
+                    <div key={`subcat-${skillCategory.category}-${sub.name}`}>
+                      <h4 className="text-sm font-semibold text-gray-600 mb-3">
+                        {sub.name}
+                      </h4>
+                      <div className="space-y-2">
+                        {sub.items.map((item, itemIndex) => {
+                          const level = Math.max(0, Math.min(5, item.level ?? 0));
+                          return (
+                            <motion.div
+                              key={`skill-${skillCategory.category}-${sub.name}-${item.name}`}
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.5, delay: (index * 0.08) + (subIndex * 0.05) + (itemIndex * 0.03) }}
+                              viewport={{ once: true }}
+                              className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
+                            >
+                              <span className="font-medium text-gray-700">{item.name}</span>
+                              <div className="flex space-x-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <motion.div
+                                    key={`dot-${skillCategory.category}-${sub.name}-${item.name}-${i}`}
+                                    initial={{ scale: 0 }}
+                                    whileInView={{ scale: 1 }}
+                                    transition={{ delay: (index * 0.08) + (subIndex * 0.05) + (itemIndex * 0.03) + (i * 0.02) }}
+                                    viewport={{ once: true }}
+                                    className={`w-2 h-2 rounded-full ${i < level ? 'bg-blue-500' : 'bg-gray-300'}`}
+                                  />
+                                ))}
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                // Fallback: items plats
+                <div className="space-y-3">
+                  {skillCategory.items?.map((item, skillIndex: number) => {
+                    const level = Math.max(0, Math.min(5, item.level ?? 0));
+                    return (
+                      <motion.div
+                        key={`skill-${skillCategory.category}-${item.name}`}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: (index * 0.1) + (skillIndex * 0.05) }}
+                        viewport={{ once: true }}
+                        className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
+                      >
+                        <span className="font-medium text-gray-700">{item.name}</span>
+                        <div className="flex space-x-1">
+                          {[...Array(5)].map((_, i) => (
+                            <motion.div
+                              key={`skill-dot-${skillCategory.category}-${item.name}-${i}`}
+                              initial={{ scale: 0 }}
+                              whileInView={{ scale: 1 }}
+                              transition={{ delay: (index * 0.1) + (skillIndex * 0.05) + (i * 0.02) }}
+                              viewport={{ once: true }}
+                              className={`w-2 h-2 rounded-full ${
+                                i < level ? 'bg-blue-500' : 'bg-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
             </motion.div>
           ))}
         </div>

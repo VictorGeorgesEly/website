@@ -144,69 +144,348 @@ export const projects: Project[] = [
       "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     ]
   },
-    {
-        title: "Application E-commerce",
-        description: "Développement complet d'une plateforme e-commerce avec microservices, payment gateway et système de recommandation.",
-        technologies: ["React", "Node.js", "MongoDB", "Redis", "Stripe"],
-        link: "https://example.com",
-        github: "https://github.com",
-        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        detailedDescription: "Plateforme e-commerce moderne construite avec une architecture microservices. L'application gère un catalogue de produits, un système de commandes, des paiements sécurisés et un moteur de recommandation basé sur l'IA.",
-        features: [
-            "Architecture microservices",
-            "Interface utilisateur responsive",
-            "Système de paiement sécurisé",
-            "Moteur de recommandation IA",
-            "Gestion temps réel des stocks",
-            "Dashboard administrateur"
-        ],
-        challenges: [
-            "Gestion de la cohérence entre microservices",
-            "Optimisation des performances",
-            "Sécurisation des paiements",
-            "Scalabilité du système de recommandation"
-        ],
-        achievements: [
-            "500k+ utilisateurs actifs",
-            "Temps de chargement < 2 secondes",
-            "99.9% de disponibilité",
-            "Augmentation de 35% des ventes grâce aux recommandations"
-        ],
-        screenshots: [
-            "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-        ]
-    }
+  {
+    title: "Application E-commerce",
+    description: "Développement complet d'une plateforme e-commerce avec microservices, payment gateway et système de recommandation.",
+    technologies: ["React", "Node.js", "MongoDB", "Redis", "Stripe"],
+    link: "https://example.com",
+    github: "https://github.com",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    detailedDescription: "Plateforme e-commerce moderne construite avec une architecture microservices. L'application gère un catalogue de produits, un système de commandes, des paiements sécurisés et un moteur de recommandation basé sur l'IA.",
+    features: [
+      "Architecture microservices",
+      "Interface utilisateur responsive",
+      "Système de paiement sécurisé",
+      "Moteur de recommandation IA",
+      "Gestion temps réel des stocks",
+      "Dashboard administrateur"
+    ],
+    challenges: [
+      "Gestion de la cohérence entre microservices",
+      "Optimisation des performances",
+      "Sécurisation des paiements",
+      "Scalabilité du système de recommandation"
+    ],
+    achievements: [
+      "500k+ utilisateurs actifs",
+      "Temps de chargement < 2 secondes",
+      "99.9% de disponibilité",
+      "Augmentation de 35% des ventes grâce aux recommandations"
+    ],
+    screenshots: [
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    ]
+  }
 ];
 
 // Compétences techniques
 export const skills: Skill[] = [
   {
-    category: "DevOps & Cloud",
-    items: ["AWS", "Azure", "Docker", "Kubernetes", "Terraform", "Ansible"]
+    category: "Cloud & Infrastructure",
+    subcategories: [
+      {
+        name: "Kubernetes & Orchestration",
+        items: [
+          { name: "Kubernetes", level: 4 },
+          { name: "Helm", level: 4 },
+          { name: "ArgoCD", level: 4 },
+          { name: "Harbor", level: 4 }
+        ]
+      },
+      {
+        name: "Infrastructure as Code (IaC)",
+        items: [
+          { name: "Terraform", level: 4 },
+          { name: "Ansible", level: 4 }
+        ]
+      },
+      {
+        name: "Cloud hybride & multi-cloud",
+        items: [
+          { name: "AWS", level: 4 },
+          { name: "OVH", level: 4 },
+          { name: "Scaleway", level: 4 }
+        ]
+      },
+      {
+        name: "Serverless & Edge Computing",
+        items: [
+          { name: "AWS Lambda", level: 4 },
+          { name: "Cloud Functions", level: 4 },
+          { name: "Fastly CDN", level: 4 }
+        ]
+      },
+      {
+        name: "Souveraineté & Cloud européen",
+        items: [
+          { name: "OVH", level: 4 },
+          { name: "Scaleway", level: 4 },
+          { name: "OGO Security", level: 3 }
+        ]
+      },
+      {
+        name: "Observabilité",
+        items: [
+          { name: "Prometheus", level: 4 },
+          { name: "Grafana", level: 4 },
+          { name: "Loki", level: 4 },
+          { name: "ElasticSearch", level: 3 },
+          { name: "Graylog", level: 3 }
+        ]
+      },
+      {
+        name: "Optimisation des coûts (FinOps)",
+        items: [
+          { name: "FinOps", level: 3 }
+        ]
+      }
+    ]
   },
   {
-    category: "CI/CD & Monitoring",
-    items: ["Jenkins", "GitLab CI", "GitHub Actions", "Prometheus", "Grafana", "ELK Stack"]
+    category: "Conteneurisation & Orchestration avancée",
+    subcategories: [
+      {
+        name: "Docker & Conteneurs",
+        items: [
+          { name: "Docker", level: 4 }
+        ]
+      },
+      {
+        name: "Registry & Sécurité des images",
+        items: [
+          { name: "Harbor", level: 4 },
+          { name: "Notary", level: 3 }
+        ]
+      },
+      {
+        name: "Trafic réseau inter-conteneurs",
+        items: [
+          { name: "Nginx", level: 4 },
+          { name: "Traefik", level: 4 },
+          { name: "HAProxy", level: 4 },
+          { name: "Apache", level: 3 }
+        ]
+      },
+      {
+        name: "Sécurité des conteneurs",
+        items: [
+          { name: "Trivy", level: 4 },
+          { name: "Falco", level: 3 },
+          { name: "OPA", level: 3 }
+        ]
+      }
+    ]
   },
   {
-    category: "Frontend",
-    items: ["React", "TypeScript", "Vue.js", "Next.js", "Tailwind CSS"]
+    category: "Infrastructure Physique & Datacenters",
+    subcategories: [
+      {
+        name: "Migration & Hébergement souverain",
+        items: [
+          { name: "Data4", level: 2 },
+          { name: "Equinix", level: 2 }
+        ]
+      },
+      {
+        name: "Relations resellers & matériel",
+        items: [
+          { name: "Sourcing matériel", level: 3 }
+        ]
+      },
+      {
+        name: "Installation & maintenance",
+        items: [
+          { name: "Rack & câblage", level: 3 },
+          { name: "Alimentation redondée", level: 3 },
+          { name: "Supervision", level: 3 }
+        ]
+      },
+      {
+        name: "Cœur de réseau & équipements",
+        items: [
+          { name: "Fortigate", level: 3 },
+          { name: "Cisco", level: 3 },
+          { name: "OPNsense", level: 3 }
+        ]
+      },
+      {
+        name: "Hyperviseurs & virtualisation",
+        items: [
+          { name: "VMWare", level: 3 },
+          { name: "Proxmox", level: 3 }
+        ]
+      }
+    ]
   },
   {
-    category: "Backend",
-    items: ["Node.js", "Python", "Go", "PostgreSQL", "MongoDB", "Redis"]
+    category: "Sécurité & Conformité",
+    subcategories: [
+      {
+        name: "Zero Trust & IAM",
+        items: [
+          { name: "Zero Trust", level: 3 },
+          { name: "Keycloak", level: 4 },
+          { name: "RBAC", level: 4 },
+          { name: "SSO", level: 4 }
+        ]
+      },
+      {
+        name: "Conformité RGPD & NIS2",
+        items: [
+          { name: "Logs & audits", level: 3 },
+          { name: "Privacy by design", level: 3 }
+        ]
+      },
+      {
+        name: "Protection & WAF",
+        items: [
+          { name: "OGO Security", level: 3 },
+          { name: "AWS Shield", level: 3 },
+          { name: "ModSecurity", level: 3 },
+          { name: "Cloudflare", level: 4 }
+        ]
+      },
+      {
+        name: "Sécurité Supply Chain & Mail",
+        items: [
+          { name: "Attestation CI/CD", level: 2 },
+          { name: "DMARC", level: 3 },
+          { name: "DKIM", level: 3 },
+          { name: "SPF", level: 3 }
+        ]
+      }
+    ]
   },
   {
-    category: "Outils & Méthodologies",
-    items: ["Git", "Agile/Scrum", "Linux", "Nginx", "Load Balancing"]
+    category: "DevOps & Automatisation",
+    subcategories: [
+      {
+        name: "GitOps & CI/CD avancé",
+        items: [
+          { name: "GitLab CI", level: 4 },
+          { name: "Jenkins", level: 4 },
+          { name: "GitHub Actions", level: 4 },
+          { name: "ArgoCD", level: 4 },
+          { name: "n8n", level: 3 }
+        ]
+      },
+      {
+        name: "Automatisation & Scripting",
+        items: [
+          { name: "Python", level: 4 },
+          { name: "Bash", level: 4 },
+          { name: "Go", level: 3 },
+          { name: "Terraform", level: 4 }
+        ]
+      },
+      {
+        name: "Self-healing infrastructure",
+        items: [
+          { name: "Auto-remédiation", level: 2 },
+          { name: "Agents IA (N8N)", level: 2 }
+        ]
+      },
+      {
+        name: "Logs & traçabilité",
+        items: [
+          { name: "Grafana Loki", level: 4 }
+        ]
+      },
+      {
+        name: "Optimisation & scaling Kubernetes",
+        items: [
+          { name: "KEDA", level: 3 },
+          { name: "Cluster Autoscaler", level: 3 }
+        ]
+      }
+    ]
+  },
+  {
+    category: "Bases de données & Stockage",
+    subcategories: [
+      {
+        name: "SGBD",
+        items: [
+          { name: "PostgreSQL", level: 4 },
+          { name: "MySQL", level: 4 },
+          { name: "MariaDB", level: 3 },
+          { name: "MongoDB", level: 4 },
+          { name: "Redis", level: 4 },
+          { name: "SQLite", level: 3 }
+        ]
+      },
+      {
+        name: "Stockage objet & distribué",
+        items: [
+          { name: "Ceph", level: 3 },
+          { name: "MinIO", level: 3 },
+          { name: "S3-compatible", level: 3 }
+        ]
+      },
+      {
+        name: "Optimisation des performances",
+        items: [
+          { name: "Caching", level: 3 },
+          { name: "Sharding", level: 3 },
+          { name: "Partitioning", level: 3 },
+          { name: "Réplication", level: 3 }
+        ]
+      }
+    ]
+  },
+  {
+    category: "Networking & Edge Computing",
+    subcategories: [
+      {
+        name: "Réseaux & connectivité",
+        items: [
+          { name: "OPNsense", level: 3 },
+          { name: "VPN mesh", level: 3 },
+          { name: "VLAN", level: 3 }
+        ]
+      },
+      {
+        name: "Edge & CDN",
+        items: [
+          { name: "Cloudflare", level: 4 },
+          { name: "Fastly", level: 3 }
+        ]
+      },
+      {
+        name: "Service Mesh",
+        items: [
+          { name: "Calico", level: 3 },
+          { name: "Cilium", level: 3 }
+        ]
+      }
+    ]
+  },
+  {
+    category: "Observabilité & Performance",
+    subcategories: [
+      {
+        name: "SRE & Monitoring",
+        items: [
+          { name: "SLI/SLO/SLA", level: 3 },
+          { name: "Dashboards", level: 3 }
+        ]
+      },
+      {
+        name: "Logging centralisé",
+        items: [
+          { name: "Elastic Stack", level: 3 },
+          { name: "Loki", level: 4 }
+        ]
+      }
+    ]
   }
 ];
 
 // Points forts
 export const highlights: Highlight[] = [
-    { label: "Années d'expérience", value: "5+" },
-    { label: "Projets réalisés", value: "30+" },
-    { label: "Technologies maîtrisées", value: "15+" },
-    { label: "Certifications", value: "AWS, Docker" }
+  { label: "Années d'expérience", value: "5+" },
+  { label: "Projets réalisés", value: "30+" },
+  { label: "Technologies maîtrisées", value: "15+" },
+  { label: "Certifications", value: "AWS, Docker" }
 ];

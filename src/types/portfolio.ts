@@ -43,9 +43,20 @@ export interface Project {
 }
 
 // Compétences
+export interface SkillItem {
+  name: string;
+  level: number; // 0..5
+}
+
+export interface SkillSubcategory {
+  name: string;
+  items: SkillItem[];
+}
+
 export interface Skill {
   category: string;
-  items: string[];
+  items?: SkillItem[];
+  subcategories?: SkillSubcategory[];
 }
 
 // Points forts (utilisé dans AboutSection via constants/portfolio)
@@ -53,4 +64,3 @@ export interface Highlight {
   label: string;
   value: string;
 }
-
