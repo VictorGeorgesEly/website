@@ -153,7 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo, classNam
     <section
       ref={ref}
       id="home"
-      className={cn("relative h-screen overflow-hidden", className)}
+      className={cn("relative min-h-[100svh] h-screen overflow-hidden", className)}
     >
       {/* Effet de lumière suivant la souris */}
       <motion.div
@@ -351,7 +351,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo, classNam
       {/* Contenu principal avec effets lumineux sur le texte */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 flex items-center justify-center h-full"
+        className="relative z-10 flex items-center justify-start md:justify-center h-full pt-24 pb-24 md:pt-0 md:pb-0"
       >
         <div className="text-center text-white px-6 max-w-5xl">
           {/* Badge d'introduction avec effet lumineux */}
@@ -405,7 +405,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo, classNam
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8"
           >
-            <h1 className="text-6xl md:text-8xl font-black mb-4 leading-tight"
+            <h1 className="text-5xl md:text-8xl font-black mb-4 leading-tight"
                 style={{
                   filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.5))',
                 }}>
@@ -538,7 +538,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo, classNam
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.0 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center"
+            className="flex flex-col sm:flex-row gap-6 justify-center mb-8 sm:mb-0"
           >
             <motion.div
               whileHover={{
@@ -627,7 +627,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo, classNam
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+        className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
         <motion.div
           animate={{ y: [0, 12, 0] }}
@@ -638,7 +638,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo, classNam
             filter: 'drop-shadow(0 0 15px rgba(59, 130, 246, 0.8))',
           }}
           onClick={() => {
-            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+            smoothScrollToSection('about');
           }}
         >
           <div className="w-8 h-12 border-2 border-white/40 rounded-full mx-auto mb-3 bg-white/5 backdrop-blur-sm relative overflow-hidden"
