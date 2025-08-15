@@ -1,0 +1,144 @@
+name: CI/CD release (build, tag, ansible deploy)
+
+on:
+  push:
+    branches: [ release ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-release
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    env:
+      # Paramétrage Ansible via Variables de dépôt (Settings > Variables) et Secrets
+      ANSIBLE_REPOSITORY: ${{ vars.ANSIBLE_REPOSITORY }}
+      ANSIBLE_REF: ${{ vars.ANSIBLE_REF }}
+      ANSIBLE_INVENTORY: ${{ vars.ANSIBLE_INVENTORY }}
+      ANSIBLE_PLAYBOOK: ${{ vars.ANSIBLE_PLAYBOOK }}
+      ANSIBLE_EXTRA_VARS: ${{ vars.ANSIBLE_EXTRA_VARS }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js (from .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: true
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Read version from package.json
+        id: pkg
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Package build as zip (versioned)
+        run: |
+          cd dist
+          zip -qr "../portfolio-${{ steps.pkg.outputs.version }}.zip" .
+
+      - name: Compute SHA1 checksum
+        id: shasum
+        run: |
+          SHA=$(sha1sum "portfolio-${{ steps.pkg.outputs.version }}.zip" | cut -d ' ' -f 1)
+          echo "sha1=$SHA" >> "$GITHUB_OUTPUT"
+          echo "Checksum: $SHA"
+
+      - name: Upload artifact (zip)
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-${{ steps.pkg.outputs.version }}.zip
+          path: portfolio-${{ steps.pkg.outputs.version }}.zip
+          retention-days: 5
+
+      - name: Create git tag if release
+        if: contains(steps.pkg.outputs.version, 'SNAPSHOT') == false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch --tags --force
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          # Re-autoriser le push avec le token
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          TAG="${{ steps.pkg.outputs.version }}"
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "Tag $TAG already exists, skipping tag creation"
+          else
+            git tag -a "$TAG" -m "Build #${GITHUB_RUN_NUMBER} sha1:${{ steps.shasum.outputs.sha1 }} | URL: artifact portfolio-${{ steps.pkg.outputs.version }}.zip"
+            git push origin --tags
+          fi
+
+      - name: Bump version to next SNAPSHOT
+        if: contains(steps.pkg.outputs.version, 'SNAPSHOT') == false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          npm version prepatch --preid=SNAPSHOT -m "chore: bump version to %s [skip ci]"
+          git push origin HEAD:${GITHUB_REF_NAME}
+
+      - name: Start SSH agent for Ansible targets
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+
+      - name: Checkout Ansible repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ANSIBLE_REPOSITORY }}
+          ref: ${{ env.ANSIBLE_REF }}
+          token: ${{ secrets.ANSIBLE_REPO_TOKEN }}
+          path: ansible
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Ansible requirements
+        working-directory: ansible
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f roles/requirements.yml ]; then ansible-galaxy install -p ./roles -r ./roles/requirements.yml; fi
+
+      - name: Prepare Ansible vault/password
+        if: ${{ secrets.ANSIBLE_VAULT_PASSWORD != '' }}
+        working-directory: ansible
+        run: |
+          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass.txt
+        env:
+          ANSIBLE_VAULT_PASSWORD_FILE: ${{ github.workspace }}/ansible/.vault_pass.txt
+
+      - name: Run Ansible playbook (deploy)
+        working-directory: ansible
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+        run: |
+          ZIP_PATH="${GITHUB_WORKSPACE}/portfolio-${{ steps.pkg.outputs.version }}.zip"
+          CHK="sha1:${{ steps.shasum.outputs.sha1 }}"
+          EXTRA="${ANSIBLE_EXTRA_VARS:+-e ${ANSIBLE_EXTRA_VARS}}"
+          echo "Deploying with ZIP=$ZIP_PATH and CHECKSUM=$CHK on branch ${GITHUB_REF_NAME}"
+          ansible-playbook -i "${ANSIBLE_INVENTORY}" "${ANSIBLE_PLAYBOOK}" \
+            -e "build_zip_path=${ZIP_PATH}" -e "build_checksum=${CHK}" -e "branch=${GITHUB_REF_NAME}" $EXTRA
