@@ -1,0 +1,71 @@
+name: Security & Quality checks
+
+on:
+  push:
+    branches-ignore:
+      - release
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trivy-scan:
+    name: Trivy scan (vuln/secret/misconfig/license)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          scanners: 'vuln,secret,misconfig,license'
+          severity: 'HIGH,CRITICAL'
+          ignore-unfixed: true
+          skip-dirs: 'node_modules,dist'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          timeout: '5m'
+        env:
+          TRIVY_DEBUG: 'false'
+        # Laisse échouer le job en cas de vulnérabilités, mais on uploade quand même le SARIF
+        continue-on-error: false
+
+      - name: Upload Trivy SARIF to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-results.sarif
+
+  codeql:
+    name: GitHub CodeQL analysis (JS/TS)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:javascript'
+
