@@ -123,18 +123,28 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f roles/requirements.yml ]; then ansible-galaxy install -p ./roles -r ./roles/requirements.yml; fi
 
+      - name: Detect vault password secret
+        id: vault
+        shell: bash
+        run: |
+          if [ -n "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Prepare Ansible vault/password
-        if: ${{ secrets.ANSIBLE_VAULT_PASSWORD != '' }}
+        if: ${{ steps.vault.outputs.present == 'true' }}
         working-directory: ansible
         run: |
           echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass.txt
-        env:
-          ANSIBLE_VAULT_PASSWORD_FILE: ${{ github.workspace }}/ansible/.vault_pass.txt
+          chmod 600 .vault_pass.txt
 
       - name: Run Ansible playbook (deploy)
         working-directory: ansible
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          ANSIBLE_VAULT_PASSWORD_FILE: ${{ github.workspace }}/ansible/.vault_pass.txt
         run: |
           ZIP_PATH="${GITHUB_WORKSPACE}/portfolio-${{ steps.pkg.outputs.version }}.zip"
           CHK="sha1:${{ steps.shasum.outputs.sha1 }}"
